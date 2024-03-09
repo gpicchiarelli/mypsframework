@@ -31,7 +31,8 @@ function DownloadFilesRecursively($currentUrl, $currentFolder) {
 
         # Se il link è una directory, esegui il download ricorsivo
         if ($_.href -match '/$') {
-            $subFolder = Join-Path -Path $currentFolder -ChildPath $fileName
+            $subFolderName = [System.IO.Path]::GetFileNameWithoutExtension($_.href)
+            $subFolder = Join-Path -Path $currentFolder -ChildPath $subFolderName
             DownloadFilesRecursively $_.href $subFolder
         }
     }
