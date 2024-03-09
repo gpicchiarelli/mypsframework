@@ -5,5 +5,3 @@ Install-WindowsUpdate -MicrosoftUpdate -AcceptAll
 
 # Aggiorna tutte le applicazioni installate tramite Winget
 winget upgrade --all
-
-
