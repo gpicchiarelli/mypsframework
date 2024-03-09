@@ -1,3 +1,9 @@
+#Install Module
+Install-Module MSRCSecurityUpdates -Force
+
+#Import Module
+Import-Module MSRCSecurityUpdates
+
 # Ottieni le informazioni sulle vulnerabilità dal Microsoft Security Response Center
 $Vulnerabilities = Invoke-WebRequest -Uri "https://msrc.microsoft.com/update-guide/vulnerability" | Select-Object -ExpandProperty Content
 
