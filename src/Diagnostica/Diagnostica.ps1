@@ -35,6 +35,6 @@ $diagnosticInfo += New-Object PSObject -Property $hardwareInfo
 $diagnosticInfo += New-Object PSObject -Property $networkInfo
 $diagnosticInfo += New-Object PSObject -Property $diskInfo
 
-$diagnosticInfo | Export-Csv -Path "$env:USERPROFILE\Desktop\diagnostic_info.csv" -NoTypeInformation
+$diagnosticInfo | Export-Csv -Path "$env:USERPROFILE\diagnostic_info.csv" -NoTypeInformation
 
-Write-Host "Le informazioni di diagnostica sono state salvate su desktop\diagnostic_info.csv"
+Write-Host "Le informazioni di diagnostica sono state salvate su diagnostic_info.csv"
