@@ -6,10 +6,8 @@ if ($principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administ
     Write-Host "Lo script è in esecuzione con privilegi amministrativi."
 } else {
     Write-Host "Lo script non è in esecuzione con privilegi amministrativi."
+    exit
 }
-
-# Il codice qui sotto verrà eseguito solo se lo script viene avviato con privilegi amministrativi
-Write-Host "Lo script è in esecuzione con privilegi amministrativi."
 
 # Installa il modulo MSRCSecurityUpdates se non è già installato
 if (-not (Get-Module -Name MSRCSecurityUpdates -ListAvailable)) {
