@@ -24,6 +24,9 @@ try {
     if ($currentVersionObject -eq $latestVersionObject) {
         Write-Host "La versione attuale di PowerShell ($currentVersion) è già la più recente. Nessun aggiornamento disponibile."
         exit
+    }else{
+        Write-Host "La versione trovata di PowerShell ($latestVersion)."
+        exit
     }
 
     Write-Host "La versione attualmente installata di PowerShell è $currentVersion."
