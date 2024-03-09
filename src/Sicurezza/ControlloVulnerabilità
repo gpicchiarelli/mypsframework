@@ -1,0 +1,9 @@
+# Ottieni le informazioni sulle vulnerabilità dal Microsoft Security Response Center
+$Vulnerabilities = Invoke-WebRequest -Uri "https://msrc.microsoft.com/update-guide/vulnerability" | Select-Object -ExpandProperty Content
+
+# Estrai le informazioni rilevanti (ad esempio, elenco delle vulnerabilità)
+$VulnerabilityList = $Vulnerabilities | Select-String -Pattern "<li>" | ForEach-Object { $_.ToString() }
+
+# Stampa l'elenco delle vulnerabilità
+Write-Host "Elenco delle vulnerabilità:"
+$VulnerabilityList
