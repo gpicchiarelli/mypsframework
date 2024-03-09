@@ -16,10 +16,24 @@ $hardwareInfo = @{
 }
 
 # Informazioni di rete
+# Informazioni di rete
 $networkInfo = @{
-    "Indirizzo IP" = (Get-NetIPAddress | Where-Object {$_.InterfaceAlias -eq 'Ethernet'}).IPAddress
-    "Gateway predefinito" = (Get-NetIPAddress | Where-Object {$_.InterfaceAlias -eq 'Ethernet'}).NextHop
-    "DNS primario" = (Get-DnsClientServerAddress | Where-Object {$_.InterfaceAlias -eq 'Ethernet'}).ServerAddresses[0]
+    "Indirizzo IP" = $null
+    "Gateway predefinito" = $null
+    "DNS primario" = $null
+}
+
+$networkInterface = Get-NetIPAddress | Where-Object {$_.InterfaceAlias -eq 'Ethernet'}
+
+if ($networkInterface) {
+    $networkInfo["Indirizzo IP"] = $networkInterface.IPAddress
+    $networkInfo["Gateway predefinito"] = $networkInterface.NextHop
+}
+
+$dnsServer = Get-DnsClientServerAddress | Where-Object {$_.InterfaceAlias -eq 'Ethernet'}
+
+if ($dnsServer) {
+    $networkInfo["DNS primario"] = $dnsServer.ServerAddresses[0]
 }
 
 # Informazioni disco
