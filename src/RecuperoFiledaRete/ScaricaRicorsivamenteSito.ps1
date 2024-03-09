@@ -7,7 +7,7 @@ param (
 $domain = [uri]$url | Select-Object -ExpandProperty Host
 
 # Percorso completo della cartella di destinazione nella directory "Downloads"
-$outputDirectory = Join-Path -Path ([Environment]::GetFolderPath("MyDocuments")) -ChildPath "Downloads\$domain"
+$outputDirectory = Join-Path -Path ([Environment]::GetFolderPath("MyDocuments")) -ChildPath "$domain"
 
 # Crea la directory di destinazione se non esiste già
 if (!(Test-Path -Path $outputDirectory -PathType Container)) {
