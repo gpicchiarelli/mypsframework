@@ -17,3 +17,10 @@ Per utilizzare mypswork, è necessario avere installato:
 - PowerShell 5.1 o versioni successive.
 - Per alcuni script potrebbe essere richiesta l'esecuzione con privilegi amministrativi.
 
+## Contribuisci
+
+Se desideri contribuire a mypswork, sei il benvenuto! Puoi aprire un problema per segnalare bug o suggerire nuove funzionalità. Inoltre, puoi inviare una pull request per aggiungere nuovi script, migliorare quelli esistenti o correggere errori.
+
+## Licenza
+
+Questo progetto è distribuito con la licenza MIT. Consulta il file [LICENSE](LICENSE) per maggiori informazioni.
