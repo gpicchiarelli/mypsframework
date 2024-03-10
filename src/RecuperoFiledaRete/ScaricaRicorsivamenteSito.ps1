@@ -7,15 +7,19 @@ param (
 $domain = [uri]$url | Select-Object -ExpandProperty Host
 
 # Percorso completo della cartella di destinazione nella directory "Downloads"
-$outputDirectory = Join-Path -Path ([Environment]::GetFolderPath("MyDocuments")) -ChildPath "$domain"
+$outputDirectory = Join-Path -Path ([Environment]::GetFolderPath("MyDocuments")) -ChildPath "Downloads\$domain"
 
 # Crea la directory di destinazione se non esiste già
 if (!(Test-Path -Path $outputDirectory -PathType Container)) {
     New-Item -Path $outputDirectory -ItemType Directory -ErrorAction Stop | Out-Null
 }
 
-# Funzione per scaricare un file
-function Download-File {
+# Inizializza una coda per tenere traccia degli URL da visitare
+$urlQueue = [System.Collections.Queue]::new()
+$urlQueue.Enqueue($url)
+
+# Funzione per salvare un file
+function Save-File {
     param(
         [string]$url,
         [string]$outputPath
@@ -38,7 +42,8 @@ function Download-File {
 # Funzione per scaricare una pagina web ricorsivamente
 function Download-WebPageRecursively {
     param(
-        [string]$url
+        [string]$url,
+        [string]$outputDirectory
     )
 
     # Scarica la pagina web
@@ -54,31 +59,29 @@ function Download-WebPageRecursively {
     $relativePath = $url -replace [regex]::Escape($url.Host), ""
 
     # Genera il percorso completo del file di destinazione
-    $outputPath = Join-Path -Path $outputDirectory -ChildPath $relativePath
+    $outputPath = Join-Path -Path $outputDirectory -ChildPath (Split-Path -Path $relativePath -Leaf)
 
     # Salva il contenuto della pagina web sul disco
     $webPageContent.Content | Set-Content -Path $outputPath -ErrorAction Stop
 
     Write-Output "Download completato: $outputPath"
 
-    # Cerca link all'interno della pagina web e scarica ricorsivamente i file collegati
+    # Cerca link all'interno della pagina web e aggiungi gli URL alla coda
     $webPageContent.Links | ForEach-Object {
         $linkUrl = $_.href
-        # Verifica se l'URI è valido prima di utilizzarlo
-        if ([uri]::TryCreate($linkUrl, [System.UriKind]::Absolute, [ref]$uri)) {
-            # Scarica ricorsivamente il link se è una pagina web
-            if ($uri.AbsoluteUri -match "^.+\.html?$") {
-                Download-WebPageRecursively -url $uri.AbsoluteUri
-            }
-            # Scarica il file collegato se non è una pagina web
-            else {
-                $linkFileName = [System.IO.Path]::GetFileName($uri.AbsoluteUri)
-                $linkOutputPath = Join-Path -Path $outputDirectory -ChildPath $linkFileName
-                Download-File -url $uri.AbsoluteUri -outputPath $linkOutputPath
-            }
+        # Verifica se l'URL è valido prima di aggiungerlo alla coda
+        if ($linkUrl -ne $null) {
+            # Aggiungi l'URL alla coda
+            $urlQueue.Enqueue($linkUrl)
         }
+    }
+
+    # Visita gli URL nella coda e scarica i file ricorsivamente
+    while ($urlQueue.Count -gt 0) {
+        $nextUrl = $urlQueue.Dequeue()
+        Download-WebPageRecursively -url $nextUrl -outputDirectory $outputDirectory
     }
 }
 
 # Avvia il download della pagina web in modo ricorsivo
-Download-WebPageRecursively -url $url
+Download-WebPageRecursively -url $url -outputDirectory $outputDirectory
