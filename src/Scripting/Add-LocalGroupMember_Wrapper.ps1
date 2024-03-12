@@ -1,0 +1,29 @@
+# Wrapper generato automaticamente per il comando Add-LocalGroupMember
+
+function Add-LocalGroupMember {
+    param (
+        [LocalGroup] $Group,
+        [LocalPrincipal[]] $Member,
+        [String] $Name,
+        [SecurityIdentifier] $SID,
+        [SwitchParameter] $Verbose,
+        [SwitchParameter] $Debug,
+        [ActionPreference] $ErrorAction,
+        [ActionPreference] $WarningAction,
+        [ActionPreference] $InformationAction,
+        [ActionPreference] $ProgressAction,
+        [String] $ErrorVariable,
+        [String] $WarningVariable,
+        [String] $InformationVariable,
+        [String] $OutVariable,
+        [Int32] $OutBuffer,
+        [String] $PipelineVariable,
+        [SwitchParameter] $WhatIf,
+        [SwitchParameter] $Confirm
+    )
+
+    # Inserisci qui la logica per utilizzare il comando Add-LocalGroupMember
+    # Ad esempio:
+    $result = &Add-LocalGroupMember @PSBoundParameters
+    return $result
+}

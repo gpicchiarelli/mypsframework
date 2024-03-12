@@ -1,0 +1,32 @@
+# Wrapper generato automaticamente per il comando Add-VMSwitchExtensionSwitchFeature
+
+function Add-VMSwitchExtensionSwitchFeature {
+    param (
+        [CimSession[]] $CimSession,
+        [String[]] $ComputerName,
+        [PSCredential[]] $Credential,
+        [VMSwitchExtensionSwitchFeature[]] $VMSwitchExtensionFeature,
+        [String[]] $SwitchName,
+        [VMSwitch[]] $VMSwitch,
+        [SwitchParameter] $Passthru,
+        [SwitchParameter] $Verbose,
+        [SwitchParameter] $Debug,
+        [ActionPreference] $ErrorAction,
+        [ActionPreference] $WarningAction,
+        [ActionPreference] $InformationAction,
+        [ActionPreference] $ProgressAction,
+        [String] $ErrorVariable,
+        [String] $WarningVariable,
+        [String] $InformationVariable,
+        [String] $OutVariable,
+        [Int32] $OutBuffer,
+        [String] $PipelineVariable,
+        [SwitchParameter] $WhatIf,
+        [SwitchParameter] $Confirm
+    )
+
+    # Inserisci qui la logica per utilizzare il comando Add-VMSwitchExtensionSwitchFeature
+    # Ad esempio:
+    $result = &Add-VMSwitchExtensionSwitchFeature @PSBoundParameters
+    return $result
+}

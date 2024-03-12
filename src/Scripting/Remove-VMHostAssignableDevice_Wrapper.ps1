@@ -1,0 +1,33 @@
+# Wrapper generato automaticamente per il comando Remove-VMHostAssignableDevice
+
+function Remove-VMHostAssignableDevice {
+    param (
+        [CimSession[]] $CimSession,
+        [String[]] $ComputerName,
+        [PSCredential[]] $Credential,
+        [String] $InstancePath,
+        [String] $LocationPath,
+        [VMHostAssignableDevice[]] $HostAssignableDevice,
+        [String[]] $ResourcePoolName,
+        [SwitchParameter] $Force,
+        [SwitchParameter] $Verbose,
+        [SwitchParameter] $Debug,
+        [ActionPreference] $ErrorAction,
+        [ActionPreference] $WarningAction,
+        [ActionPreference] $InformationAction,
+        [ActionPreference] $ProgressAction,
+        [String] $ErrorVariable,
+        [String] $WarningVariable,
+        [String] $InformationVariable,
+        [String] $OutVariable,
+        [Int32] $OutBuffer,
+        [String] $PipelineVariable,
+        [SwitchParameter] $WhatIf,
+        [SwitchParameter] $Confirm
+    )
+
+    # Inserisci qui la logica per utilizzare il comando Remove-VMHostAssignableDevice
+    # Ad esempio:
+    $result = &Remove-VMHostAssignableDevice @PSBoundParameters
+    return $result
+}

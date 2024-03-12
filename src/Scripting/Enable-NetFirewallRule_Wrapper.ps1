@@ -1,0 +1,58 @@
+# Wrapper generato automaticamente per il comando Enable-NetFirewallRule
+
+function Enable-NetFirewallRule {
+    param (
+        [String[]] $Name,
+        [String[]] $DisplayName,
+        [String[]] $Description,
+        [String[]] $DisplayGroup,
+        [String[]] $Group,
+        [Enabled[]] $Enabled,
+        [Direction[]] $Direction,
+        [Action[]] $Action,
+        [EdgeTraversal[]] $EdgeTraversalPolicy,
+        [Boolean[]] $LooseSourceMapping,
+        [Boolean[]] $LocalOnlyMapping,
+        [String[]] $Owner,
+        [PrimaryStatus[]] $PrimaryStatus,
+        [String[]] $Status,
+        [String[]] $PolicyStoreSource,
+        [PolicyStoreType[]] $PolicyStoreSourceType,
+        [String[]] $PolicyAppId,
+        [CimInstance] $AssociatedNetFirewallAddressFilter,
+        [CimInstance] $AssociatedNetFirewallApplicationFilter,
+        [CimInstance] $AssociatedNetFirewallInterfaceFilter,
+        [CimInstance] $AssociatedNetFirewallInterfaceTypeFilter,
+        [CimInstance] $AssociatedNetFirewallPortFilter,
+        [CimInstance] $AssociatedNetFirewallSecurityFilter,
+        [CimInstance] $AssociatedNetFirewallServiceFilter,
+        [CimInstance] $AssociatedNetFirewallProfile,
+        [SwitchParameter] $All,
+        [String] $PolicyStore,
+        [SwitchParameter] $TracePolicyStore,
+        [CimInstance[]] $InputObject,
+        [CimSession[]] $CimSession,
+        [Int32] $ThrottleLimit,
+        [SwitchParameter] $AsJob,
+        [SwitchParameter] $PassThru,
+        [SwitchParameter] $Verbose,
+        [SwitchParameter] $Debug,
+        [ActionPreference] $ErrorAction,
+        [ActionPreference] $WarningAction,
+        [ActionPreference] $InformationAction,
+        [ActionPreference] $ProgressAction,
+        [String] $ErrorVariable,
+        [String] $WarningVariable,
+        [String] $InformationVariable,
+        [String] $OutVariable,
+        [Int32] $OutBuffer,
+        [String] $PipelineVariable,
+        [SwitchParameter] $WhatIf,
+        [SwitchParameter] $Confirm
+    )
+
+    # Inserisci qui la logica per utilizzare il comando Enable-NetFirewallRule
+    # Ad esempio:
+    $result = &Enable-NetFirewallRule @PSBoundParameters
+    return $result
+}

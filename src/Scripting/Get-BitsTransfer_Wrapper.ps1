@@ -1,0 +1,26 @@
+# Wrapper generato automaticamente per il comando Get-BitsTransfer
+
+function Get-BitsTransfer {
+    param (
+        [String[]] $Name,
+        [SwitchParameter] $AllUsers,
+        [Guid[]] $JobId,
+        [SwitchParameter] $Verbose,
+        [SwitchParameter] $Debug,
+        [ActionPreference] $ErrorAction,
+        [ActionPreference] $WarningAction,
+        [ActionPreference] $InformationAction,
+        [ActionPreference] $ProgressAction,
+        [String] $ErrorVariable,
+        [String] $WarningVariable,
+        [String] $InformationVariable,
+        [String] $OutVariable,
+        [Int32] $OutBuffer,
+        [String] $PipelineVariable
+    )
+
+    # Inserisci qui la logica per utilizzare il comando Get-BitsTransfer
+    # Ad esempio:
+    $result = &Get-BitsTransfer @PSBoundParameters
+    return $result
+}

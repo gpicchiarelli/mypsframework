@@ -1,0 +1,50 @@
+# Wrapper generato automaticamente per il comando Remove-NetIPsecMainModeRule
+
+function Remove-NetIPsecMainModeRule {
+    param (
+        [String[]] $Name,
+        [String[]] $DisplayName,
+        [String[]] $Description,
+        [String[]] $DisplayGroup,
+        [String[]] $Group,
+        [Enabled[]] $Enabled,
+        [String[]] $MainModeCryptoSet,
+        [String[]] $Phase1AuthSet,
+        [PrimaryStatus[]] $PrimaryStatus,
+        [String[]] $Status,
+        [String[]] $PolicyStoreSource,
+        [PolicyStoreType[]] $PolicyStoreSourceType,
+        [CimInstance] $AssociatedNetFirewallAddressFilter,
+        [CimInstance] $AssociatedNetFirewallProfile,
+        [CimInstance] $AssociatedNetIPsecPhase1AuthSet,
+        [CimInstance] $AssociatedNetIPsecMainModeCryptoSet,
+        [SwitchParameter] $All,
+        [String] $PolicyStore,
+        [String] $GPOSession,
+        [SwitchParameter] $TracePolicyStore,
+        [CimInstance[]] $InputObject,
+        [CimSession[]] $CimSession,
+        [Int32] $ThrottleLimit,
+        [SwitchParameter] $AsJob,
+        [SwitchParameter] $PassThru,
+        [SwitchParameter] $Verbose,
+        [SwitchParameter] $Debug,
+        [ActionPreference] $ErrorAction,
+        [ActionPreference] $WarningAction,
+        [ActionPreference] $InformationAction,
+        [ActionPreference] $ProgressAction,
+        [String] $ErrorVariable,
+        [String] $WarningVariable,
+        [String] $InformationVariable,
+        [String] $OutVariable,
+        [Int32] $OutBuffer,
+        [String] $PipelineVariable,
+        [SwitchParameter] $WhatIf,
+        [SwitchParameter] $Confirm
+    )
+
+    # Inserisci qui la logica per utilizzare il comando Remove-NetIPsecMainModeRule
+    # Ad esempio:
+    $result = &Remove-NetIPsecMainModeRule @PSBoundParameters
+    return $result
+}
