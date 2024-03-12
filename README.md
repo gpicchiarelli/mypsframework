@@ -2,7 +2,7 @@
 
 ## Introduzione
 
-Benvenuto in mypswork! Questo è un progetto open source creato per semplificare e automatizzare la manutenzione del computer e il lavoro quotidiano utilizzando PowerShell. Che tu sia un sistemista, un amministratore di sistema o semplicemente un utente interessato a ottimizzare la propria esperienza informatica, mypswork è qui per aiutarti a semplificare e automatizzare compiti ripetitivi.
+Benvenuto in mypsframework! Questo è un progetto open source creato per semplificare e automatizzare la manutenzione del computer e il lavoro quotidiano utilizzando PowerShell. Che tu sia un sistemista, un amministratore di sistema o semplicemente un utente interessato a ottimizzare la propria esperienza informatica, mypsframework è qui per aiutarti a semplificare e automatizzare compiti ripetitivi.
 
 ## Funzionalità
 
