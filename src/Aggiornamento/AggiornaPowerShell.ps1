@@ -1,4 +1,5 @@
 $PSVersionTable
+$Host
 
 # Scarica l'installer MSI per l'ultima versione di PowerShell
 $InstallerUrl = "https://aka.ms/install-powershell.ps1"
