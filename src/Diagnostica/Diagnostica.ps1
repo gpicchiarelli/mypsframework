@@ -1,3 +1,26 @@
+<#
+.SYNOPSIS
+    Script per ottenere informazioni di sistema e hardware.
+
+.DESCRIPTION
+    Questo script PowerShell raccoglie informazioni di sistema e hardware, tra cui nome del computer, nome utente, sistema operativo, architettura, dettagli della memoria RAM, dell'hard disk, della CPU e altre informazioni hardware.
+    Le informazioni vengono visualizzate a schermo e l'output di systeminfo viene salvato in una variabile e visualizzato.
+
+.INSTRUCTIONS
+    Esegui lo script per ottenere le informazioni di sistema e hardware.
+
+.PARAMETERS
+    Nessun parametro richiesto.
+
+.EXAMPLE
+    .\InformazioniSistema.ps1
+
+    Ottiene e visualizza informazioni di sistema e hardware.
+
+.NOTES
+    - Assicurati di eseguire lo script con privilegi di amministratore per ottenere informazioni complete.
+#>
+
 # Informazioni di sistema
 $systemInfo = @{
     "Nome computer" = $env:COMPUTERNAME

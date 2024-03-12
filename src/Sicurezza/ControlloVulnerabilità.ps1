@@ -1,3 +1,27 @@
+<#
+.SYNOPSIS
+    Script per la ricerca delle vulnerabilità Microsoft per il mese corrente e la creazione di un rapporto HTML.
+
+.DESCRIPTION
+    Questo script PowerShell ricerca le vulnerabilità Microsoft per il mese corrente utilizzando il modulo MSRCSecurityUpdates.
+    In base ai privilegi amministrativi dell'utente, installa il modulo se necessario e quindi crea un rapporto HTML con le informazioni delle vulnerabilità trovate.
+
+.INSTRUCTIONS
+    Assicurati di eseguire lo script con privilegi di amministratore.
+
+.PARAMETERS
+    Nessun parametro richiesto.
+
+.EXAMPLE
+    .\RicercaVulnerabilita.ps1
+
+    Ricerca le vulnerabilità Microsoft per il mese corrente e crea un rapporto HTML.
+
+.NOTES
+    - Assicurati di eseguire questo script con privilegi di amministratore.
+    - Questo script utilizza il modulo MSRCSecurityUpdates, assicurati di averlo installato prima dell'esecuzione dello script.
+#>
+
 try {
     Write-Host "Ricerca delle vulnerabilità per il mese corrente."
 

@@ -1,3 +1,32 @@
+<#
+.SYNOPSIS
+    Script per verificare una firma RSA su un testo originale utilizzando una chiave pubblica.
+
+.DESCRIPTION
+    Questo script PowerShell permette di verificare una firma RSA su un testo originale utilizzando una chiave pubblica.
+    Accetta il percorso del file firmato e il percorso del file contenente la chiave pubblica.
+    Verifica che entrambi i file esistano, legge il testo originale da verificare, carica la chiave pubblica, legge la firma digitale dal file firmato,
+    calcola l'hash del testo originale, e verifica la firma utilizzando l'algoritmo di hash SHA-256.
+
+.INSTRUCTIONS
+    Esegui lo script specificando il percorso del file firmato e il percorso del file contenente la chiave pubblica.
+
+.PARAMETERS
+    -signedFilePath <String>
+        Il percorso del file firmato.
+
+    -publicKeyFilePath <String>
+        Il percorso del file contenente la chiave pubblica.
+
+.EXAMPLE
+    .\VerificaFirmaRSA.ps1 -signedFilePath "C:\percorso\del\file_firmato.txt" -publicKeyFilePath "C:\percorso\del\chiave_pubblica.txt"
+
+    Verifica la firma RSA sul file "file_firmato.txt" utilizzando la chiave pubblica dal file "chiave_pubblica.txt".
+
+.NOTES
+    - Assicurati di specificare percorsi validi per i file firmati e le chiavi pubbliche.
+#>
+
 param (
     [string]$signedFilePath,
     [string]$publicKeyFilePath
