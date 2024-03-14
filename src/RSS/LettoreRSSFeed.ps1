@@ -55,7 +55,13 @@ if ($FeedUrl) {
 
 # Estrai i dati dai feed RSS nel file OPML
 if ($OPMLFilePath) {
-    $feeds = Read-OPMLFile -OPMLFilePath $OPMLFilePath
+    # Leggi il contenuto del file OPML
+    $opmlContent = Get-Content -Path $OPMLFilePath
+
+    # Estrai gli URL dei feed RSS dal file OPML
+    $feeds = Select-String -InputObject $opmlContent -Pattern '<outline.*xmlUrl="(.+?)"' -AllMatches |
+             ForEach-Object { $_.Matches.Groups[1].Value }
+
     foreach ($feed in $feeds) {
         $items = Read-RSSFeed -FeedUrl $feed
         foreach ($item in $items) {
@@ -66,13 +72,6 @@ if ($OPMLFilePath) {
             $row++
         }
     }
-}
-
-# Imposta il formato automatico per la tabella
-$tableRange = $worksheet.Range("A1:D$row")
-$table = $worksheet.ListObjects.Add([Microsoft.Office.Interop.Excel.XlListObjectSourceType]::xlSrcRange, $tableRange, $null, [Microsoft.Office.Interop.Excel.XlYesNoGuess]::xlYes)
-if ($table -ne $null) {
-    $table.TableStyle = "Tabella"
 }
 
 # Salva il file Excel
