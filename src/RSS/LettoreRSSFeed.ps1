@@ -12,20 +12,26 @@ function Get-RSSFeedsFromOPML {
         [string]$OPMLFilePath
     )
 
+    # Verifica se il file OPML esiste
+    if (-not (Test-Path $OPMLFilePath)) {
+        Write-Host "Il file OPML specificato non esiste."
+        return
+    }
+
     # Leggi il contenuto del file OPML
-    $opmlContent = Get-Content -Path $OPMLFilePath
+    $opmlContent = Get-Content -Path $OPMLFilePath -Raw
 
     # Inizializza un array per memorizzare gli URL dei feed RSS
     $feeds = @()
 
     # Estrai gli URL XML dei feed RSS dal file OPML
-    $matches = Select-String -InputObject $opmlContent -Pattern 'xmlUrl="(.+?)"' -AllMatches
+    $matches = [regex]::Matches($opmlContent, 'xmlUrl="([^"]+)"')
 
     # Itera su ogni corrispondenza e aggiungi l'URL al array
     foreach ($match in $matches) {
-        $feeds += $match.Matches.Groups[1].Value
+        $feeds += $match.Groups[1].Value
     }
-    Write-Host "$feeds"
+
     # Ritorna l'array di URL dei feed RSS
     return $feeds
 }
