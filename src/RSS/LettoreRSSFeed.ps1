@@ -3,6 +3,9 @@ param (
     [string]$OPMLFilePath,
     [string]$ExcelFilePath = "$([Environment]::GetFolderPath('UserProfile'))\Downloads\output_$((Get-Date).ToString('yyyyMMdd_HHmmssfff')).xlsx"
 )
+# Ottieni la versione di Office installata sul sistema
+$officeVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configuration").VersionToReport
+Write-Host "Versione di Office installata:$officeVersion"
 
 # Funzione per leggere il contenuto del feed RSS
 function Read-RSSFeed {
