@@ -7,6 +7,29 @@ param (
 $officeVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configuration").VersionToReport
 Write-Host "Versione di Office installata:$officeVersion"
 
+function Get-RSSFeedsFromOPML {
+    param (
+        [string]$OPMLFilePath
+    )
+
+    # Leggi il contenuto del file OPML
+    $opmlContent = Get-Content -Path $OPMLFilePath
+
+    # Inizializza un array per memorizzare gli URL dei feed RSS
+    $feeds = @()
+
+    # Estrai gli URL XML dei feed RSS dal file OPML
+    $matches = Select-String -InputObject $opmlContent -Pattern 'xmlUrl="(.+?)"' -AllMatches
+
+    # Itera su ogni corrispondenza e aggiungi l'URL al array
+    foreach ($match in $matches) {
+        $feeds += $match.Matches.Groups[1].Value
+    }
+    Write-Host "$feeds"
+    # Ritorna l'array di URL dei feed RSS
+    return $feeds
+}
+
 # Funzione per leggere il contenuto del feed RSS
 function Read-RSSFeed {
     param (
@@ -16,17 +39,6 @@ function Read-RSSFeed {
     $rssContent = Invoke-WebRequest -Uri $FeedUrl
     $rssXml = [xml]$rssContent.Content
     return $rssXml.rss.channel.item
-}
-
-# Funzione per leggere il contenuto del file OPML e ottenere i feed RSS
-function Read-OPMLFile {
-    param (
-        [string]$OPMLFilePath
-    )
-
-    $opmlContent = Get-Content -Path $OPMLFilePath
-    $feeds = $opmlContent | Select-String -Pattern '<outline.*xmlUrl=\"(.*?)\"' | ForEach-Object { $_.Matches.Groups[1].Value }
-    return $feeds
 }
 
 # Crea un nuovo file Excel
@@ -55,12 +67,8 @@ if ($FeedUrl) {
 
 # Estrai i dati dai feed RSS nel file OPML
 if ($OPMLFilePath) {
-    # Leggi il contenuto del file OPML
-    $opmlContent = Get-Content -Path $OPMLFilePath
-
     # Estrai gli URL dei feed RSS dal file OPML
-    $feeds = Select-String -InputObject $opmlContent -Pattern '<outline.*xmlUrl="(.+?)"' -AllMatches |
-             ForEach-Object { $_.Matches.Groups[1].Value }
+    $feeds = Get-RSSFeedsFromOPML -OPMLFilePath $OPMLFilePath
 
     foreach ($feed in $feeds) {
         $items = Read-RSSFeed -FeedUrl $feed
@@ -81,3 +89,18 @@ $workbook.SaveAs($ExcelFilePath)
 $excelApp.Quit()
 
 Write-Host "File Excel salvato in $ExcelFilePath"
+
+function Get-RSSFeedsFromOPML {
+    param (
+        [string]$OPMLFilePath
+    )
+
+    # Leggi il contenuto del file OPML
+    $opmlContent = Get-Content -Path $OPMLFilePath
+
+    # Estrai gli URL XML dai feed RSS nel file OPML
+    $feeds = Select-String -InputObject $opmlContent -Pattern 'xmlUrl="(.+?)"' -AllMatches |
+             ForEach-Object { $_.Matches.Groups[1].Value }
+
+    return $feeds
+}
