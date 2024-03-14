@@ -75,7 +75,7 @@ if ($FeedUrl) {
 if ($OPMLFilePath) {
     # Estrai gli URL dei feed RSS dal file OPML
     $feeds = Get-RSSFeedsFromOPML -OPMLFilePath $OPMLFilePath
-
+    $row = 2
     foreach ($feed in $feeds) {
         $items = Read-RSSFeed -FeedUrl $feed
         foreach ($item in $items) {
