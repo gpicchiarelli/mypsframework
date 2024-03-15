@@ -6,7 +6,7 @@ param (
     [string]$SmtpServer,
     [int] $Port,
     [string]$Username,
-    [SecureString]$SecPassword,
+    [string]$Password,
     [array]$Attachments = @()
 )
 Write-Host $SecPassword
@@ -26,7 +26,7 @@ foreach ($Attachment in $Attachments) {
 
 # Crea un oggetto SmtpClient per l'invio della mail
 $smtp = New-Object System.Net.Mail.SmtpClient($SmtpServer,$Port)
-$smtp.Credentials = New-Object System.Net.NetworkCredential($Username, $SecPassword)
+$smtp.Credentials = New-Object System.Net.NetworkCredential($Username, $Password)
 $smtp.EnableSsl = $true  # Abilita SSL per connessioni sicure SMTP
 
 # Invia il messaggio email
