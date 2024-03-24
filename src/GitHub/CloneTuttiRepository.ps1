@@ -6,6 +6,7 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$destinationPath
 )
+Install-Module -Name PowerShellForGitHub
 
 # Ottieni la lista di tutti i repository
 $repos = (Invoke-RestMethod -Uri "https://api.github.com/users/$username/repos" -Headers @{Authorization = "token $token"}).clone_url
