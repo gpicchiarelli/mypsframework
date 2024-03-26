@@ -6,6 +6,7 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$destinationPath
 )
+Install-Module -Name PowerShellForGitHub
 
 # Funzione per clonare i repository
 function CloneRepositories {
