@@ -7,8 +7,25 @@ param (
     [string]$destinationPath
 )
 
+# Funzione per clonare i repository
+function CloneRepositories {
+    param (
+        [string]$url,
+        [string]$destination
+    )
+    
+    # Clona il repository nella cartella di destinazione specificata
+    git clone $url $destination
+}
+
 # Ottieni la lista di tutti i repository
-$repos = (Invoke-RestMethod -Uri "https://api.github.com/users/$username/repos" -Headers @{Authorization = "token $token"}).clone_url
+$page = 1
+$repos = @()
+do {
+    $response = Invoke-RestMethod -Uri "https://api.github.com/users/$username/repos?page=$page" -Headers @{Authorization = "token $token"}
+    $repos += $response.clone_url
+    $page++
+} while ($response.Count -gt 0)
 
 # Contatore per limitare il parallelismo
 $counter = 0
@@ -17,7 +34,9 @@ $counter = 0
 foreach ($repo in $repos) {
     $repoName = [System.IO.Path]::GetFileNameWithoutExtension($repo)
     $destinationRepoPath = Join-Path -Path $destinationPath -ChildPath $repoName
-    git clone $repo $destinationRepoPath
+
+    # Clona il repository
+    CloneRepositories -url $repo -destination $destinationRepoPath
 
     # Incrementa il contatore
     $counter++
