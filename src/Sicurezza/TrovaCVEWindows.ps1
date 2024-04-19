@@ -10,21 +10,49 @@ $tempDir = [System.IO.Path]::GetTempPath()
 $fileName = "allitems.xml"
 $filePath = Join-Path -Path $tempDir -ChildPath $fileName
 
-# Scarica il file XML
+# Scaricamento del file XML
 Write-Host "Scaricamento del file XML in corso..."
 Invoke-WebRequest -Uri $fileUrl -OutFile $filePath
+Write-Host "File XML scaricato con successo."
 
-# Analizza il file XML
+# Analisi del file XML
+Write-Host "Analisi del file XML in corso..."
 $xmlData = [xml](Get-Content -Path $filePath)
+Write-Host "File XML analizzato con successo."
 
-# Ottieni l'elenco dei programmi installati
-$installedPrograms = Get-WmiObject -Class Win32_Product | Select-Object -ExpandProperty Name
-
-# Cerca le vulnerabilità nel file XML e crea il report
-$report = @()
-foreach ($program in $installedPrograms) {
+# Creazione dell'indice per i programmi
+Write-Host "Creazione dell'indice per i programmi in corso..."
+$programIndex = @{}
+foreach ($program in Get-WmiObject -Class Win32_Product | Select-Object -ExpandProperty Name) {
     $vulnerabilities = $xmlData.SelectNodes("//item[cpe_match/cpe23Uri[contains(text(),'$program')]]")
     foreach ($vuln in $vulnerabilities) {
+        if (-not $programIndex.ContainsKey($program)) {
+            $programIndex[$program] = @()
+        }
+        $programIndex[$program] += $vuln
+    }
+}
+Write-Host "Indice creato con successo."
+
+# Genera un report formattato
+$systemInfo = Get-WmiObject -Class Win32_OperatingSystem
+$reportHeader = @"
+==============================================================================
+Report delle Vulnerabilità del Sistema
+Data e Ora del report: $(Get-Date)
+Sistema Operativo: $($systemInfo.Caption) $($systemInfo.Version)
+Architettura: $($systemInfo.OSArchitecture)
+Firma del File XML: $(Get-FileHash -Path $filePath -Algorithm SHA256).Hash
+==============================================================================
+"@
+
+$reportHeader
+
+# Cerca le vulnerabilità utilizzando l'indice
+Write-Host "Ricerca delle vulnerabilità in corso..."
+$report = @()
+foreach ($program in $programIndex.Keys) {
+    foreach ($vuln in $programIndex[$program]) {
         $vulnData = @{
             Program = $program
             CVE_ID = $vuln.cve.id
@@ -37,18 +65,12 @@ foreach ($program in $installedPrograms) {
         $report += New-Object PSObject -Property $vulnData
     }
 }
+Write-Host "Ricerca delle vulnerabilità completata."
 
-# Genera un report formattato
-$systemInfo = Get-WmiObject -Class Win32_OperatingSystem
-$reportHeader = @"
-==============================================================================
-Report delle Vulnerabilità del Sistema
-Data del report: $(Get-Date)
-Sistema Operativo: $($systemInfo.Caption) $($systemInfo.Version)
-Architettura: $($systemInfo.OSArchitecture)
-Firma del File XML: $(Get-FileHash -Path $filePath -Algorithm SHA256).Hash
-==============================================================================
-"@
+# Salva il report nella cartella Downloads con un nome univoco
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+$reportFileName = "Vulnerability_Report_$timestamp.txt"
+$reportPath = Join-Path -Path [System.Environment]::GetFolderPath("Downloads") -ChildPath $reportFileName
+$report | Format-Table -AutoSize | Out-File -FilePath $reportPath -Encoding utf8
 
-$reportHeader
-$report | Format-Table -AutoSize
+Write-Host "Report salvato in: $reportPath"
